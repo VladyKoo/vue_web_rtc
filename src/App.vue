@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import 'webrtc-adapter'
 import Camera from './components/Camera.vue'
 export default {
   components: { Camera },

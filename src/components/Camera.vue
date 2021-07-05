@@ -119,6 +119,7 @@
 </template>
 
 <script>
+import 'webrtc-adapter'
 export default {
   name: 'Camera',
 
