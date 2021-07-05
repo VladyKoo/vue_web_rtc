@@ -2,7 +2,7 @@ FROM node
 
 WORKDIR /var/www/web
 
-COPY . /var/www/web
+COPY ./ /var/www/web
 
 EXPOSE 5000
 
