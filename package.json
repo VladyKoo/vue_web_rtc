@@ -17,7 +17,8 @@
     "express-fileupload": "^1.2.1",
     "normalize.css": "^8.0.1",
     "uuid": "^8.3.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "webrtc-adapter": "^8.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

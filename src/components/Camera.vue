@@ -111,9 +111,9 @@
       </div>
     </transition>
 
-    <!-- <div v-for="(err, index) of errors" :key="index">
+    <div v-for="(err, index) of errors" :key="index">
       <div>{{ err.message }}</div>
-    </div> -->
+    </div>
 
   </div>
 </template>
