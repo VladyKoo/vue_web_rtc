@@ -12,9 +12,9 @@ import Camera from './components/Camera.vue'
 export default {
   components: { Camera },
   name: 'App',
-  data: () => ({  
+  data: () => ({
     showCamera: true
-  }),
+  })
 }
 </script>
 

@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios from 'axios'
 
 export default {
-  install(Vue) {
+  install (Vue) {
     Vue.prototype.$axios = axios.create({
-      baseURL: process.env.VUE_APP_BASE_URL,
+      baseURL: process.env.VUE_APP_BASE_URL
     })
   }
-};
+}

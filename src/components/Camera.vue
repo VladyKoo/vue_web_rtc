@@ -85,8 +85,8 @@
       {{ showDevices ? 'Hidden devices' : 'Show devices' }}
     </button>
     <transition>
-      <div v-if="showDevices"> 
-        <div v-if="devices.length || allDevices.length">              
+      <div v-if="showDevices">
+        <div v-if="devices.length || allDevices.length">
           <div v-if="currentDevice" class="device">
             <div class="device__title">Current device</div>
             <div>
@@ -106,7 +106,7 @@
               <span class="device__value" >{{device.deviceId }}</span>
             </div>
           </div>
-        </div> 
+        </div>
         <div v-else >Don't detected devises</div>
       </div>
     </transition>
@@ -140,15 +140,15 @@ export default {
       blob: null,
       url: '',
       quality: 1,
-      type: 'image/png',
+      type: 'image/png'
     },
     stream: null,
     striming: false,
 
-    photoUrl: '',
+    photoUrl: ''
   }),
 
-  mounted() {
+  mounted () {
     this.canvas = this.$refs.canvas
     this.video = this.$refs.video
 
@@ -158,25 +158,25 @@ export default {
   },
 
   methods: {
-    setError(err) {
+    setError (err) {
       this.error = err
       setTimeout(() => {
         this.error = null
       }, 4000)
     },
 
-    async getConnectedDevices(type = 'videoinput') {
+    async getConnectedDevices (type = 'videoinput') {
       if (this.currentDevice || this.devices.length) return
       try {
-        let devices = await window.navigator.mediaDevices.enumerateDevices()
-        let filtredDevices = devices.filter((el) => el.kind === type && el.label && el.deviceId)
+        const devices = await window.navigator.mediaDevices.enumerateDevices()
+        const filtredDevices = devices.filter((el) => el.kind === type && el.label && el.deviceId)
         if (!filtredDevices.length) return
 
         this.allDevices = filtredDevices
         if (filtredDevices.length > 2) {
           let front = []
           let back = []
-          let undef = []
+          const undef = []
 
           filtredDevices.forEach((el) => {
             const str = el.label.toLowerCase()
@@ -205,9 +205,7 @@ export default {
       }
     },
 
-    handleError(error) {
-      console.log(error)
-
+    handleError (error) {
       if (!this.error && error && error.constraint && error.constraint === 'facingMode') {
         this.setError('facingMode')
       }
@@ -221,13 +219,13 @@ export default {
       }
     },
 
-    startStriming() {
+    startStriming () {
       const constraints = {
         audio: false,
         video:
           this.currentDevice && this.currentDevice.deviceId
             ? { deviceId: { exact: this.currentDevice.deviceId } }
-            : true,
+            : true
       }
 
       window.navigator.mediaDevices
@@ -247,7 +245,7 @@ export default {
         })
     },
 
-    stopStriming() {
+    stopStriming () {
       if (!this.stream) return
       const tracks = this.stream.getTracks()
       tracks.forEach((track) => track.stop())
@@ -257,9 +255,8 @@ export default {
       this.clearPhoto()
     },
 
-    changeCameras() {
-      if (!this.currentDevice || this.devices.length < 2)
-        return this.setError('You have only one camera')
+    changeCameras () {
+      if (!this.currentDevice || this.devices.length < 2) { return this.setError('You have only one camera') }
       this.stopStriming()
 
       const newcurrentDevice = this.devices.filter(
@@ -270,7 +267,7 @@ export default {
       this.startStriming()
     },
 
-    takePhoto() {
+    takePhoto () {
       if (!this.striming) return this.setError('Start camera')
       var context = this.canvas.getContext('2d')
       this.width = this.video.clientWidth
@@ -290,31 +287,30 @@ export default {
       )
     },
 
-    clearPhoto() {
+    clearPhoto () {
       if (!this.image.url) return
       this.image.url = ''
       this.image.blob = null
     },
 
-    async sendPhoto() {
+    async sendPhoto () {
       if (!this.striming) return this.setError('Start camera')
       if (!this.image.blob) return this.setError('Take photo')
 
       const formData = new FormData()
       formData.append('image', this.image.blob)
       const config = {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: { 'Content-Type': 'multipart/form-data' }
       }
 
       const response = await this.$axios.post('/api/upload', formData, config)
 
-      if (!response && !response.data && !response.data.success)
-        return this.setError(response.data.message)
+      if (!response && !response.data && !response.data.success) { return this.setError(response.data.message) }
       this.photoUrl = `${process.env.VUE_APP_BASE_URL}/${response.data.url}`
 
       this.clearPhoto()
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -401,7 +397,7 @@ export default {
 }
 
 .start-button {
-  background-color: green;
+  background-color: #fff;
   border-radius: 10px;
   padding: 10px;
   display: flex;
@@ -409,12 +405,8 @@ export default {
   align-items: center;
 }
 
-.stop-button {
-  background-color: rgb(255, 53, 53);
-}
-
 .send-button {
-  background-color: blue;
+  background-color: #fff;
   border-radius: 10px;
   padding: 10px;
   display: flex;
