@@ -1,11 +1,11 @@
-FROM node
-
-WORKDIR /var/www/web
-
-COPY ./ /var/www/web
+FROM node:16-alpine3.14
 
 EXPOSE 5000
+RUN mkdir /opt/web && chown node:node /opt/web
+WORKDIR /opt/web
+COPY --chown=node:node . .
 
-CMD npm i \
+USER node
+CMD npm ci \
 	&& npm run build \
 	&& npm run start
